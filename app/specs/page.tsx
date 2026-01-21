@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function SpecsPage() {
-  const [activeTab, setActiveTab] = useState<'features' | 'specs' | 'faq'>('features');
+  const [activeTab, setActiveTab] = useState<'features' | 'specs' | 'compare' | 'faq'>('features');
 
   const features = [
     {
@@ -59,6 +59,45 @@ export default function SpecsPage() {
     ]}
   ];
 
+  const presets = [
+    {
+      name: 'Sport Edition',
+      config: { paint: 'red', wheels: 'sport', env: 'studio', cam: 'default' },
+      specs: {
+        '0-60 mph': '3.1s',
+        'Top Speed': '185 mph',
+        'Horsepower': '475 HP',
+        'Torque': '450 lb-ft',
+        'Weight': '3,450 lbs'
+      },
+      description: 'Track-focused performance with aggressive styling and maximum power output.'
+    },
+    {
+      name: 'Luxury Touring',
+      config: { paint: 'black', wheels: 'luxury', env: 'studio', cam: 'default' },
+      specs: {
+        '0-60 mph': '3.4s',
+        'Top Speed': '175 mph',
+        'Horsepower': '425 HP',
+        'Torque': '400 lb-ft',
+        'Weight': '3,620 lbs'
+      },
+      description: 'Premium comfort with advanced technology and refined driving dynamics.'
+    },
+    {
+      name: 'All-Rounder',
+      config: { paint: 'blue', wheels: 'sport', env: 'outdoor', cam: 'default' },
+      specs: {
+        '0-60 mph': '3.2s',
+        'Top Speed': '180 mph',
+        'Horsepower': '450 HP',
+        'Torque': '430 lb-ft',
+        'Weight': '3,535 lbs'
+      },
+      description: 'Balanced performance for daily driving and weekend adventures.'
+    }
+  ];
+
   const faqs = [
     {
       question: 'How do I save a configuration?',
@@ -74,7 +113,7 @@ export default function SpecsPage() {
     },
     {
       question: 'How many configurations can I save?',
-      answer: 'There\'s no strict limit, but browser local storage has space limitations. We recommend keeping your gallery to a reasonable number of builds.'
+      answer: `Maximum of 20 builds can be saved. Gallery storage is optimized to maintain performance while preserving your favorite configurations.`
     },
     {
       question: 'What browsers are supported?',
@@ -92,7 +131,7 @@ export default function SpecsPage() {
       
       <div className="mb-8">
         <div className="flex space-x-1 border-b">
-          {(['features', 'specs', 'faq'] as const).map((tab) => (
+          {(['features', 'specs', 'compare', 'faq'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -139,6 +178,71 @@ export default function SpecsPage() {
                       <span className="font-medium">{item.value}</span>
                     </div>
                   ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'compare' && (
+        <section>
+          <h2 className="text-2xl font-semibold mb-6">Compare Presets</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse bg-white rounded-lg shadow-sm border">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left p-4 font-semibold">Preset</th>
+                  <th className="text-left p-4 font-semibold">Paint</th>
+                  <th className="text-left p-4 font-semibold">Wheels</th>
+                  <th className="text-left p-4 font-semibold">0-60 mph</th>
+                  <th className="text-left p-4 font-semibold">Top Speed</th>
+                  <th className="text-left p-4 font-semibold">Horsepower</th>
+                  <th className="text-left p-4 font-semibold">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {presets.map((preset, index) => (
+                  <tr key={index} className="border-b hover:bg-gray-50">
+                    <td className="p-4 font-medium">{preset.name}</td>
+                    <td className="p-4 capitalize">{preset.config.paint}</td>
+                    <td className="p-4 capitalize">{preset.config.wheels}</td>
+                    <td className="p-4 font-mono">{preset.specs['0-60 mph']}</td>
+                    <td className="p-4 font-mono">{preset.specs['Top Speed']}</td>
+                    <td className="p-4 font-mono">{preset.specs.Horsepower}</td>
+                    <td className="p-4 text-sm text-gray-600 max-w-xs">{preset.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {presets.map((preset, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-sm border">
+                <div className="p-4 border-b">
+                  <h3 className="text-lg font-semibold">{preset.name}</h3>
+                </div>
+                <div className="p-4 space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Paint:</span>
+                    <span className="capitalize">{preset.config.paint}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Wheels:</span>
+                    <span className="capitalize">{preset.config.wheels}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">0-60 mph:</span>
+                    <span>{preset.specs['0-60 mph']}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Horsepower:</span>
+                    <span>{preset.specs.Horsepower}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-3 pt-3 border-t">
+                    {preset.description}
+                  </p>
                 </div>
               </div>
             ))}

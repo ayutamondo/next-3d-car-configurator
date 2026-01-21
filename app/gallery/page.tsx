@@ -2,6 +2,7 @@
 
 import { useBuilds } from '@/lib/useBuilds';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Build } from '@/lib/types';
 
@@ -64,7 +65,13 @@ export default function GalleryPage() {
             <div key={build.id} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
               <div className="bg-gray-100 h-48 flex items-center justify-center">
                 {build.thumbnail ? (
-                  <img src={build.thumbnail} alt={build.name} className="w-full h-full object-cover" />
+                  <Image 
+                    src={build.thumbnail} 
+                    alt={build.name} 
+                    width={300} 
+                    height={192} 
+                    className="w-full h-full object-cover" 
+                  />
                 ) : (
                   <div className="text-center">
                     <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-2 flex items-center justify-center">
