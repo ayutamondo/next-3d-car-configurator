@@ -4,6 +4,7 @@ import { useConfigState } from '@/lib/useConfigState';
 import { useToast } from '@/lib/useToast';
 import { useBuilds } from '@/lib/useBuilds';
 import { PAINT_OPTIONS, WHEEL_OPTIONS, ENV_OPTIONS, CAM_OPTIONS } from '@/lib/types';
+import CarViewer from '@/components/CarViewer';
 
 export default function ConfiguratorPage() {
   const { config, updateConfig, resetConfig } = useConfigState();
@@ -37,8 +38,8 @@ export default function ConfiguratorPage() {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-gray-100 rounded-lg h-[600px] flex items-center justify-center">
-          <p className="text-gray-500">3D View (Coming in Phase 3)</p>
+        <div className="lg:col-span-2 bg-gray-100 rounded-lg h-[600px] overflow-hidden">
+          <CarViewer config={config} />
         </div>
         
         <div className="space-y-6">
